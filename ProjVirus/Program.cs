@@ -439,7 +439,6 @@ namespace ProjVirus
                     }
                     Console.ReadLine();
                 }
-
             }
             catch (GraficoException e)
             {
