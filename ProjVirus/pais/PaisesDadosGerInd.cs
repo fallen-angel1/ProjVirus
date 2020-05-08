@@ -16,13 +16,5 @@ namespace ProjVirus.pais
         {
             return "DG";
         }
-
-        private bool podeMover(Grafico pos)
-        {
-            Pais p = alt.pais(pos);
-            return p == null || p.cor != cor;
-        }
-
-     
     }
 }

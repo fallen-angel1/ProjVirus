@@ -18,6 +18,13 @@ namespace ProjVirus
         public static List<Espanha> espanha = new List<Espanha>();
         public static List<PaisesDadosGer> paisesDados = new List<PaisesDadosGer>();
 
+        public static List<Tuple<int, int, int>> portugalValores = new List<Tuple<int, int, int>>();
+        public static List<Tuple<int, int, int>> espanhaValores = new List<Tuple<int, int, int>>();
+        public static List<Tuple<int, int, int>> italiaValores = new List<Tuple<int, int, int>>();
+        public static List<Tuple<int, int, int>> chinaValores = new List<Tuple<int, int, int>>();
+        public static List<Tuple<int, int, int>> euaValores = new List<Tuple<int, int, int>>();
+
+
         static void Main(string[] args)
         {
             int opcao = 0;
@@ -36,12 +43,11 @@ namespace ProjVirus
             espanha.Add(new Espanha(82, morItEuaEsCh[3]));
             portugal.Add(new Portugal(79));
 
-            int mortGeral = 0;
-            foreach (int item in morItEuaEsCh)
-            {
-                mortGeral += item;
-            }
-            paisesDados.Add(new PaisesDadosGer(mortGeral));
+            int somArrayMortes = morItEuaEsCh.Sum();
+            int dadosMortalidadePortugal = Program.portugal.Where(item => item.mortalidade > 0).Sum(item => item.mortalidade);
+            int todasMortesPaises = somArrayMortes + dadosMortalidadePortugal;
+
+            paisesDados.Add(new PaisesDadosGer(todasMortesPaises));
 
             try
             {
@@ -70,66 +76,19 @@ namespace ProjVirus
                     else if (opcao == 2)
                     {
                         Tela.escolhaPortugal(grafico);
-
-                        var cRec = Program.portugal[0].casosRecuperados;
-                        var cMor = Program.portugal[0].mortalidade;
-                        if (cRec > cMor)
-                        {
-                            PosicaoIndGraf orig = new PosicaoIndGraf('2', 2);
-                            Grafico gOrig = orig.toGrafico();
-                            PosicaoIndGraf dest = new PosicaoIndGraf('2', 3);
-                            Grafico gDestino = dest.toGrafico();
-
-                            grafico.melhoriaVirus(gOrig, gDestino);
-                            Console.ReadLine();
-                            Tela.imprimirGraficoInicio(grafico);
-                        }
-                        else if (cMor > cRec)
-                        {
-                            PosicaoIndGraf orig = new PosicaoIndGraf('2', 2);
-                            Grafico gOrig = orig.toGrafico();
-                            PosicaoIndGraf dest = new PosicaoIndGraf('2', 1);
-                            Grafico gDestino = dest.toGrafico();
-
-                            grafico.piorVirus(gOrig, gDestino);
-                            Console.ReadLine();
-                            Tela.imprimirGraficoInicio(grafico);
-                        }
+                        grafico.VirusDadosGerais("Portugal");
+                        Tela.imprimirGraficoInicio(grafico);
 
                         Console.Clear();
                         Tela.imprimirGraficoInicio(grafico);
                         InputSimulator sim = new InputSimulator();
                         sim.Keyboard.KeyPress(VirtualKeyCode.RETURN);
 
-                        var cRecGe = Program.paisesDados[0].casosRecuperados;
-                        var cMortGe = Program.paisesDados[0].mortalidade;
-                        if (cRecGe > cMortGe)
-                        {
-                            PosicaoIndGraf orig = new PosicaoIndGraf('1', 2);
-                            Grafico gOrig = orig.toGrafico();
-                            PosicaoIndGraf dest = new PosicaoIndGraf('1', 3);
-                            Grafico gDestino = dest.toGrafico();
-
-                            grafico.melhoriaVirus(gOrig, gDestino);
-                            Console.ReadLine();
-                            Tela.imprimirGraficoInicio(grafico);
-                        }
-                        else if (cMortGe > cRecGe)
-                        {
-                            PosicaoIndGraf orig = new PosicaoIndGraf('1', 2);
-                            Grafico gOrig = orig.toGrafico();
-                            PosicaoIndGraf dest = new PosicaoIndGraf('1', 1);
-                            Grafico gDestino = dest.toGrafico();
-
-                            grafico.piorVirus(gOrig, gDestino);
-                            Console.ReadLine();
-                            Tela.imprimirGraficoInicio(grafico);
-                        }
-
+                        grafico.VirusDadosGerais("Todos");
+                        Tela.imprimirGraficoInicio(grafico);
 
                         Console.Write("Voltar ao ecra inicial? s/n");
                         char afir = char.Parse(Console.ReadLine());
-
                         if (afir == 's')
                         {
                             Console.Clear();
@@ -139,71 +98,23 @@ namespace ProjVirus
                         {
                             Console.WriteLine("Fim do Programa!");
                         }
-
                     }
                     else if (opcao == 3)
                     {
                         Tela.escolhaItalia(grafico);
-
-                        var cRec = Program.italia[0].casosRecuperados;
-                        var cMor = Program.italia[0].mortalidade;
-                        if (cRec > cMor)
-                        {
-                            PosicaoIndGraf orig = new PosicaoIndGraf('3', 2);
-                            Grafico gOrig = orig.toGrafico();
-                            PosicaoIndGraf dest = new PosicaoIndGraf('3', 3);
-                            Grafico gDestino = dest.toGrafico();
-
-                            grafico.melhoriaVirus(gOrig, gDestino);
-                            Console.ReadLine();
-                            Tela.imprimirGraficoInicio(grafico);
-                        }
-                        else if (cMor > cRec)
-                        {
-                            PosicaoIndGraf orig = new PosicaoIndGraf('3', 2);
-                            Grafico gOrig = orig.toGrafico();
-                            PosicaoIndGraf dest = new PosicaoIndGraf('3', 1);
-                            Grafico gDestino = dest.toGrafico();
-
-                            grafico.piorVirus(gOrig, gDestino);
-                            Console.ReadLine();
-                            Tela.imprimirGraficoInicio(grafico);
-                        }
+                        grafico.VirusDadosGerais("Italia");
+                        Tela.imprimirGraficoInicio(grafico);
 
                         Console.Clear();
                         Tela.imprimirGraficoInicio(grafico);
                         InputSimulator sim = new InputSimulator();
                         sim.Keyboard.KeyPress(VirtualKeyCode.RETURN);
 
-                        var cRecGe = Program.paisesDados[0].casosRecuperados;
-                        var cMortGe = Program.paisesDados[0].mortalidade;
-                        if (cRecGe > cMortGe)
-                        {
-                            PosicaoIndGraf orig = new PosicaoIndGraf('1', 2);
-                            Grafico gOrig = orig.toGrafico();
-                            PosicaoIndGraf dest = new PosicaoIndGraf('1', 3);
-                            Grafico gDestino = dest.toGrafico();
-
-                            grafico.melhoriaVirus(gOrig, gDestino);
-                            Console.ReadLine();
-                            Tela.imprimirGraficoInicio(grafico);
-                        }
-                        else if (cMortGe > cRecGe)
-                        {
-                            PosicaoIndGraf orig = new PosicaoIndGraf('1', 2);
-                            Grafico gOrig = orig.toGrafico();
-                            PosicaoIndGraf dest = new PosicaoIndGraf('1', 1);
-                            Grafico gDestino = dest.toGrafico();
-
-                            grafico.piorVirus(gOrig, gDestino);
-                            Console.ReadLine();
-                            Tela.imprimirGraficoInicio(grafico);
-                        }
-
+                        grafico.VirusDadosGerais("Todos");
+                        Tela.imprimirGraficoInicio(grafico);
 
                         Console.Write("Voltar ao ecra inicial? s/n");
                         char afir = char.Parse(Console.ReadLine());
-
                         if (afir == 's')
                         {
                             Console.Clear();
@@ -213,71 +124,23 @@ namespace ProjVirus
                         {
                             Console.WriteLine("Fim do Programa!");
                         }
-
                     }
                     else if (opcao == 4)
                     {
                         Tela.escolhaChina(grafico);
-
-                        var cRec = Program.china[0].casosRecuperados;
-                        var cMor = Program.china[0].mortalidade;
-                        if (cRec > cMor)
-                        {
-                            PosicaoIndGraf orig = new PosicaoIndGraf('4', 2);
-                            Grafico gOrig = orig.toGrafico();
-                            PosicaoIndGraf dest = new PosicaoIndGraf('4', 3);
-                            Grafico gDestino = dest.toGrafico();
-
-                            grafico.melhoriaVirus(gOrig, gDestino);
-                            Console.ReadLine();
-                            Tela.imprimirGraficoInicio(grafico);
-                        }
-                        else if (cMor > cRec)
-                        {
-                            PosicaoIndGraf orig = new PosicaoIndGraf('4', 2);
-                            Grafico gOrig = orig.toGrafico();
-                            PosicaoIndGraf dest = new PosicaoIndGraf('4', 1);
-                            Grafico gDestino = dest.toGrafico();
-
-                            grafico.piorVirus(gOrig, gDestino);
-                            Console.ReadLine();
-                            Tela.imprimirGraficoInicio(grafico);
-                        }
+                        grafico.VirusDadosGerais("China");
+                        Tela.imprimirGraficoInicio(grafico);
 
                         Console.Clear();
                         Tela.imprimirGraficoInicio(grafico);
                         InputSimulator sim = new InputSimulator();
                         sim.Keyboard.KeyPress(VirtualKeyCode.RETURN);
 
-                        var cRecGe = Program.paisesDados[0].casosRecuperados;
-                        var cMortGe = Program.paisesDados[0].mortalidade;
-                        if (cRecGe > cMortGe)
-                        {
-                            PosicaoIndGraf orig = new PosicaoIndGraf('1', 2);
-                            Grafico gOrig = orig.toGrafico();
-                            PosicaoIndGraf dest = new PosicaoIndGraf('1', 3);
-                            Grafico gDestino = dest.toGrafico();
-
-                            grafico.melhoriaVirus(gOrig, gDestino);
-                            Console.ReadLine();
-                            Tela.imprimirGraficoInicio(grafico);
-                        }
-                        else if (cMortGe > cRecGe)
-                        {
-                            PosicaoIndGraf orig = new PosicaoIndGraf('1', 2);
-                            Grafico gOrig = orig.toGrafico();
-                            PosicaoIndGraf dest = new PosicaoIndGraf('1', 1);
-                            Grafico gDestino = dest.toGrafico();
-
-                            grafico.piorVirus(gOrig, gDestino);
-                            Console.ReadLine();
-                            Tela.imprimirGraficoInicio(grafico);
-                        }
-
+                        grafico.VirusDadosGerais("Todos");
+                        Tela.imprimirGraficoInicio(grafico);
 
                         Console.Write("Voltar ao ecra inicial? s/n");
                         char afir = char.Parse(Console.ReadLine());
-
                         if (afir == 's')
                         {
                             Console.Clear();
@@ -287,71 +150,23 @@ namespace ProjVirus
                         {
                             Console.WriteLine("Fim do Programa!");
                         }
-
                     }
                     else if (opcao == 5)
                     {
                         Tela.escolhaEua(grafico);
-
-                        var cRec = Program.EUA[0].casosRecuperados;
-                        var cMor = Program.EUA[0].mortalidade;
-                        if (cRec > cMor)
-                        {
-                            PosicaoIndGraf orig = new PosicaoIndGraf('5', 2);
-                            Grafico gOrig = orig.toGrafico();
-                            PosicaoIndGraf dest = new PosicaoIndGraf('5', 3);
-                            Grafico gDestino = dest.toGrafico();
-
-                            grafico.melhoriaVirus(gOrig, gDestino);
-                            Console.ReadLine();
-                            Tela.imprimirGraficoInicio(grafico);
-                        }
-                        else if (cMor > cRec)
-                        {
-                            PosicaoIndGraf orig = new PosicaoIndGraf('5', 2);
-                            Grafico gOrig = orig.toGrafico();
-                            PosicaoIndGraf dest = new PosicaoIndGraf('5', 1);
-                            Grafico gDestino = dest.toGrafico();
-
-                            grafico.piorVirus(gOrig, gDestino);
-                            Console.ReadLine();
-                            Tela.imprimirGraficoInicio(grafico);
-                        }
+                        grafico.VirusDadosGerais("Eua");
+                        Tela.imprimirGraficoInicio(grafico);
 
                         Console.Clear();
                         Tela.imprimirGraficoInicio(grafico);
                         InputSimulator sim = new InputSimulator();
                         sim.Keyboard.KeyPress(VirtualKeyCode.RETURN);
 
-                        var cRecGe = Program.paisesDados[0].casosRecuperados;
-                        var cMortGe = Program.paisesDados[0].mortalidade;
-                        if (cRecGe > cMortGe)
-                        {
-                            PosicaoIndGraf orig = new PosicaoIndGraf('1', 2);
-                            Grafico gOrig = orig.toGrafico();
-                            PosicaoIndGraf dest = new PosicaoIndGraf('1', 3);
-                            Grafico gDestino = dest.toGrafico();
-
-                            grafico.melhoriaVirus(gOrig, gDestino);
-                            Console.ReadLine();
-                            Tela.imprimirGraficoInicio(grafico);
-                        }
-                        else if (cMortGe > cRecGe)
-                        {
-                            PosicaoIndGraf orig = new PosicaoIndGraf('1', 2);
-                            Grafico gOrig = orig.toGrafico();
-                            PosicaoIndGraf dest = new PosicaoIndGraf('1', 1);
-                            Grafico gDestino = dest.toGrafico();
-
-                            grafico.piorVirus(gOrig, gDestino);
-                            Console.ReadLine();
-                            Tela.imprimirGraficoInicio(grafico);
-                        }
-
+                        grafico.VirusDadosGerais("Todos");
+                        Tela.imprimirGraficoInicio(grafico);
 
                         Console.Write("Voltar ao ecra inicial? s/n");
                         char afir = char.Parse(Console.ReadLine());
-
                         if (afir == 's')
                         {
                             Console.Clear();
@@ -361,71 +176,23 @@ namespace ProjVirus
                         {
                             Console.WriteLine("Fim do Programa!");
                         }
-
                     }
                     else if (opcao == 6)
                     {
                         Tela.escolhaEspanha(grafico);
-
-                        var cRec = Program.espanha[0].casosRecuperados;
-                        var cMor = Program.espanha[0].mortalidade;
-                        if (cRec > cMor)
-                        {
-                            PosicaoIndGraf orig = new PosicaoIndGraf('6', 2);
-                            Grafico gOrig = orig.toGrafico();
-                            PosicaoIndGraf dest = new PosicaoIndGraf('6', 3);
-                            Grafico gDestino = dest.toGrafico();
-
-                            grafico.melhoriaVirus(gOrig, gDestino);
-                            Console.ReadLine();
-                            Tela.imprimirGraficoInicio(grafico);
-                        }
-                        else if (cMor > cRec)
-                        {
-                            PosicaoIndGraf orig = new PosicaoIndGraf('6', 2);
-                            Grafico gOrig = orig.toGrafico();
-                            PosicaoIndGraf dest = new PosicaoIndGraf('6', 1);
-                            Grafico gDestino = dest.toGrafico();
-
-                            grafico.piorVirus(gOrig, gDestino);
-                            Console.ReadLine();
-                            Tela.imprimirGraficoInicio(grafico);
-                        }
+                        grafico.VirusDadosGerais("Espanha");
+                        Tela.imprimirGraficoInicio(grafico);
 
                         Console.Clear();
                         Tela.imprimirGraficoInicio(grafico);
                         InputSimulator sim = new InputSimulator();
                         sim.Keyboard.KeyPress(VirtualKeyCode.RETURN);
 
-                        var cRecGe = Program.paisesDados[0].casosRecuperados;
-                        var cMortGe = Program.paisesDados[0].mortalidade;
-                        if (cRecGe > cMortGe)
-                        {
-                            PosicaoIndGraf orig = new PosicaoIndGraf('1', 2);
-                            Grafico gOrig = orig.toGrafico();
-                            PosicaoIndGraf dest = new PosicaoIndGraf('1', 3);
-                            Grafico gDestino = dest.toGrafico();
-
-                            grafico.melhoriaVirus(gOrig, gDestino);
-                            Console.ReadLine();
-                            Tela.imprimirGraficoInicio(grafico);
-                        }
-                        else if (cMortGe > cRecGe)
-                        {
-                            PosicaoIndGraf orig = new PosicaoIndGraf('1', 2);
-                            Grafico gOrig = orig.toGrafico();
-                            PosicaoIndGraf dest = new PosicaoIndGraf('1', 1);
-                            Grafico gDestino = dest.toGrafico();
-
-                            grafico.piorVirus(gOrig, gDestino);
-                            Console.ReadLine();
-                            Tela.imprimirGraficoInicio(grafico);
-                        }
-
+                        grafico.VirusDadosGerais("Todos");
+                        Tela.imprimirGraficoInicio(grafico);
 
                         Console.Write("Voltar ao ecra inicial? s/n");
                         char afir = char.Parse(Console.ReadLine());
-
                         if (afir == 's')
                         {
                             Console.Clear();
@@ -435,7 +202,6 @@ namespace ProjVirus
                         {
                             Console.WriteLine("Fim do Programa!");
                         }
-
                     }
                     Console.ReadLine();
                 }

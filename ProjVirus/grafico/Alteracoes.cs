@@ -28,19 +28,9 @@ namespace grafico
         {
             return paises[pos.linha, pos.coluna];
         }
-        
-        public bool existeIndicador(Grafico pos)
-        {
-            validarGrafico(pos);
-            return pais(pos) != null;
-        }
 
         public void colocarIndicador(Pais p, Grafico graf)
         {
-            if (existeIndicador(graf))
-            {
-                throw new GraficoException("Já tem indicador");
-            }
             paises[graf.linha, graf.coluna] = p;
             p.grafico = graf;
         }

@@ -5,6 +5,7 @@ using WindowsInput.Native;
 using WindowsInput;
 using System.Text.RegularExpressions;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace ProjVirus
 {
@@ -171,14 +172,85 @@ namespace ProjVirus
             }
         }
 
-        public static void escolhaPortugal(GraficoMov grafico)
+        public static int PaisEscolhidoCasosRecuperados(string PaisEscolhidoCasosRec, int escolherPosicaoAlterar)
         {
-            Console.Write("Dados atualmente: ");
-            for (int i = 0; i < Program.portugal.Count; i++)
+            int paisAlterarPortugal = Program.portugal[escolherPosicaoAlterar].casosRecuperados;
+            int paisAlterarItalia = Program.italia[escolherPosicaoAlterar].casosRecuperados;
+            int paisAlterarChina = Program.china[escolherPosicaoAlterar].casosRecuperados;
+            int paisAlterarEspanha = Program.espanha[escolherPosicaoAlterar].casosRecuperados;
+            int paisAlterarEua = Program.EUA[escolherPosicaoAlterar].casosRecuperados;
+
+            switch (PaisEscolhidoCasosRec)
             {
-                Console.WriteLine(Program.italia[i]);
+                case "Portugal casosRecuperados":
+                    return paisAlterarPortugal;
+                case "Italia casosRecuperados":
+                    return paisAlterarItalia;
+                case "China casosRecuperados":
+                    return paisAlterarChina;
+                case "Espanha casosRecuperados":
+                    return paisAlterarEspanha;
+                case "Eua casosRecuperados":
+                    return paisAlterarEua;
             }
+            return 0;
+        }
+
+        public static int PaisEscolhidoIdadeMedia(string PaisEscolhidoIdadeMedia, int escolherPosicaoAlterar)
+        {
+            int paisAlterarPortugal = Program.portugal[escolherPosicaoAlterar].idadeMedia;
+            int paisAlterarItalia = Program.italia[escolherPosicaoAlterar].idadeMedia;
+            int paisAlterarChina = Program.china[escolherPosicaoAlterar].idadeMedia;
+            int paisAlterarEspanha = Program.espanha[escolherPosicaoAlterar].idadeMedia;
+            int paisAlterarEua = Program.EUA[escolherPosicaoAlterar].idadeMedia;
+
+            switch (PaisEscolhidoIdadeMedia)
+            {
+                case "Portugal idadeMedia":
+                    return paisAlterarPortugal;
+                case "Italia idadeMedia":
+                    return paisAlterarItalia;
+                case "China idadeMedia":
+                    return paisAlterarChina;
+                case "Espanha idadeMedia":
+                    return paisAlterarEspanha;
+                case "Eua idadeMedia":
+                    return paisAlterarEua;
+            }
+            return 0;
+        }
+
+        public static int PaisEscolhidoMortalidade(string PaisEscolhidoMortalidade, int escolherPosicaoAlterar)
+        {
+            int paisAlterarPortugal = Program.portugal[escolherPosicaoAlterar].mortalidade;
+            int paisAlterarItalia = Program.italia[escolherPosicaoAlterar].mortalidade;
+            int paisAlterarChina = Program.china[escolherPosicaoAlterar].mortalidade;
+            int paisAlterarEspanha = Program.espanha[escolherPosicaoAlterar].mortalidade;
+            int paisAlterarEua = Program.EUA[escolherPosicaoAlterar].mortalidade;
+
+            switch (PaisEscolhidoMortalidade)
+            {
+                case "Portugal Falecidos":
+                    return paisAlterarPortugal;
+                case "Italia Falecidos":
+                    return paisAlterarItalia;
+                case "China Falecidos":
+                    return paisAlterarChina;
+                case "Espanha Falecidos":
+                    return paisAlterarEspanha;
+                case "Eua Falecidos":
+                    return paisAlterarEua;
+            }
+            return 0;
+        }
+
+        public static void escolherPais(string PaisEscolhidoIdade, string PaisEscolhidoMort, string PaisEscolhidoCasosRec, string paisValoresLista, int escolherPosicaodaLista)
+        {
             bool possivel = false;
+
+            int idadNumeroAt = 0;
+            int CasosMorAct = 0;
+            int casosRecAt = 0;
 
             Console.Write("Qual a idade media dos falecidos? ");
             int idaNum;
@@ -191,16 +263,16 @@ namespace ProjVirus
                     {
                         if (idaNum > 0 && idaNum < 120)
                         {
-
-                            var NumerAntes = Program.portugal[0].idadeMedia;
-                            int idadNumeroAt = (NumerAntes + idaNum) / 2;
-                            Program.portugal[0].idadeMedia = idadNumeroAt;
+                            var NumerAntes = PaisEscolhidoIdadeMedia(PaisEscolhidoIdade, escolherPosicaodaLista);
+                            idadNumeroAt = (NumerAntes + idaNum) / 2;
+                            var NumeroAgora = PaisEscolhidoIdadeMedia(PaisEscolhidoIdade, escolherPosicaodaLista);
+                            NumeroAgora = idadNumeroAt;
 
                             Console.Write("Houve mais falecimentos devido ao pandemia? s/n ");
                             char resposta = char.Parse(Console.ReadLine());
                             if (resposta == 's')
                             {
-                                var CasosAntesMo = Program.portugal[0].mortalidade;
+                                var CasosAntesMo = PaisEscolhidoMortalidade(PaisEscolhidoMort, escolherPosicaodaLista);
                                 Console.Write("Quantas casos há? ");
                                 int mortNum;
 
@@ -209,8 +281,10 @@ namespace ProjVirus
                                 {
                                     if (int.TryParse(Console.ReadLine(), out mortNum))
                                     {
-                                        int CasosMorAct = CasosAntesMo + mortNum;
-                                        Program.portugal[0].mortalidade = CasosMorAct;
+                                        CasosMorAct = CasosAntesMo + mortNum;
+                                        var CasosMorAtualmente = PaisEscolhidoMortalidade(PaisEscolhidoMort, escolherPosicaodaLista);
+                                        CasosMorAtualmente = CasosMorAct;
+
                                         naoNuMor = true;
 
                                         Console.Write("Houve recuperados, no dia anterior? s/n ");
@@ -218,7 +292,7 @@ namespace ProjVirus
 
                                         if (respostRec == 's')
                                         {
-                                            var CasosReAn = Program.portugal[0].casosRecuperados;
+                                            var CasosRecAntes = PaisEscolhidoCasosRecuperados(PaisEscolhidoCasosRec, escolherPosicaodaLista);
                                             Console.Write("Qual a quantidade de casos recuperados? ");
                                             bool nNumCre = false;
                                             int casosNovoRec;
@@ -226,8 +300,9 @@ namespace ProjVirus
                                             {
                                                 if (int.TryParse(Console.ReadLine(), out casosNovoRec))
                                                 {
-                                                    int casosRecAt = casosNovoRec + CasosReAn;
-                                                    Program.portugal[0].casosRecuperados = casosRecAt;
+                                                    casosRecAt = casosNovoRec + CasosRecAntes;
+                                                    var casosRecuperadosAgora = PaisEscolhidoCasosRecuperados(PaisEscolhidoCasosRec, escolherPosicaodaLista);
+                                                    casosRecuperadosAgora = casosRecAt;
                                                     nNumCre = true;
                                                 }
                                                 else
@@ -242,7 +317,6 @@ namespace ProjVirus
                                     {
                                         Console.Write("Invalido, insira outra vez. Quantas casos há? ");
                                     }
-
                                 }
                             }
                             else
@@ -252,7 +326,7 @@ namespace ProjVirus
 
                                 if (respostRec == 's')
                                 {
-                                    var CasosReAn = Program.portugal[0].casosRecuperados;
+                                    var CasosReAn = PaisEscolhidoCasosRecuperados(PaisEscolhidoCasosRec, escolherPosicaodaLista);
                                     Console.Write("Qual a quantidade de casos recuperados? ");
                                     bool nNumCre = false;
                                     int casosNovoRec;
@@ -260,8 +334,10 @@ namespace ProjVirus
                                     {
                                         if (int.TryParse(Console.ReadLine(), out casosNovoRec))
                                         {
-                                            int casosRecAt = casosNovoRec + CasosReAn;
-                                            Program.portugal[0].casosRecuperados = casosRecAt;
+                                            casosRecAt = casosNovoRec + CasosReAn;
+
+                                            var CasosRecuperadosAgora = PaisEscolhidoCasosRecuperados(PaisEscolhidoCasosRec, escolherPosicaodaLista);
+                                            CasosRecuperadosAgora = casosRecAt;
                                             nNumCre = true;
                                         }
                                         else
@@ -269,8 +345,10 @@ namespace ProjVirus
                                             Console.Write("Invalido, insira outra vez. Qual a quantidade de casos recuperados? ");
                                         }
                                     }
+
                                 }
                                 possivel = true;
+
                             }
                         }
                         else
@@ -280,11 +358,56 @@ namespace ProjVirus
                         }
                     }
                     naoENum = true;
+
+                    switch (paisValoresLista)
+                    {
+                        case "Portugal":
+                            Program.portugalValores.Add(new Tuple<int, int, int>(idadNumeroAt, CasosMorAct, casosRecAt));
+                            break;
+                        case "Espanha":
+                            Program.espanhaValores.Add(new Tuple<int, int, int>(idadNumeroAt, CasosMorAct, casosRecAt));
+                            break;
+                        case "China":
+                            Program.chinaValores.Add(new Tuple<int, int, int>(idadNumeroAt, CasosMorAct, casosRecAt));
+                            break;
+                        case "Eua":
+                            Program.euaValores.Add(new Tuple<int, int, int>(idadNumeroAt, CasosMorAct, casosRecAt));
+                            break;
+                        case "Italia":
+                            Program.italiaValores.Add(new Tuple<int, int, int>(idadNumeroAt, CasosMorAct, casosRecAt));
+                            break;
+                    }
                 }
                 else
                 {
                     Console.Write("Invalido não premiu um numero!\nQual é a idade media dos falecidos?");
                 }
+            }
+        }
+
+        public static void escolhaPortugal(GraficoMov grafico)
+        {
+            Console.Write("Dados atualmente: ");
+            for (int i = 0; i < Program.portugal.Count; i++)
+            {
+                Console.WriteLine(Program.portugal[i]);
+            }
+
+            escolherPais("Portugal idadeMedia", "Portugal Falecidos", "Portugal casosRecuperados", "Portugal", 0);
+
+            var valorIdadeAtual = Program.portugalValores[0].Item1;
+            Program.portugal[0].idadeMedia = valorIdadeAtual;
+
+            var valorMortalidade = Program.portugalValores[0].Item2;
+            if (valorMortalidade != 0)
+            {
+                Program.portugal[0].mortalidade = valorMortalidade;
+            }
+
+            var valorCasosRec = Program.portugalValores[0].Item3;
+            if (valorCasosRec != 0)
+            {
+                Program.portugal[0].casosRecuperados = valorCasosRec;
             }
 
             Console.Write("Dados atualmente: ");
@@ -292,12 +415,10 @@ namespace ProjVirus
             {
                 Console.WriteLine(Program.portugal[i]);
             }
-
             //Teclado
             InputSimulator sim = new InputSimulator();
             sim.Keyboard.KeyPress(VirtualKeyCode.RETURN);
         }
-
 
         public static void escolhaItalia(GraficoMov grafico)
         {
@@ -306,113 +427,22 @@ namespace ProjVirus
             {
                 Console.WriteLine(Program.italia[i]);
             }
-            bool possivel = false;
 
-            Console.Write("Qual a idade media dos falecidos? ");
-            int idaNum;
-            bool naoENum = false;
-            while (!naoENum)
+            escolherPais("Italia idadeMedia", "Italia Falecidos", "Italia casosRecuperados", "Italia", 0);
+
+            var valorIdadeAtual = Program.italiaValores[0].Item1;
+            Program.italia[0].idadeMedia = valorIdadeAtual;
+
+            var valorMortalidade = Program.italiaValores[0].Item2;
+            if (valorMortalidade != 0)
             {
-                if (int.TryParse(Console.ReadLine(), out idaNum))
-                {
-                    while (!possivel)
-                    {
-                        if (idaNum > 0 && idaNum < 120)
-                        {
+                Program.italia[0].mortalidade = valorMortalidade;
+            }
 
-                            var NumerAntes = Program.italia[0].idadeMedia;
-                            int idadNumeroAt = (NumerAntes + idaNum) / 2;
-                            Program.italia[0].idadeMedia = idadNumeroAt;
-
-                            Console.Write("Houve mais falecimentos devido ao pandemia? s/n ");
-                            char resposta = char.Parse(Console.ReadLine());
-                            if (resposta == 's')
-                            {
-                                var CasosAntesMo = Program.italia[0].mortalidade;
-                                Console.Write("Quantas casos há? ");
-                                int mortNum;
-
-                                bool naoNuMor = false;
-                                while (!naoNuMor)
-                                {
-                                    if (int.TryParse(Console.ReadLine(), out mortNum))
-                                    {
-                                        int CasosMorAct = CasosAntesMo + mortNum;
-                                        Program.italia[0].mortalidade = CasosMorAct;
-                                        naoNuMor = true;
-
-                                        Console.Write("Houve recuperados, no dia anterior? s/n ");
-                                        char respostRec = char.Parse(Console.ReadLine());
-
-                                        if (respostRec == 's')
-                                        {
-                                            var CasosReAn = Program.italia[0].casosRecuperados;
-                                            Console.Write("Qual a quantidade de casos recuperados? ");
-                                            bool nNumCre = false;
-                                            int casosNovoRec;
-                                            while (!nNumCre)
-                                            {
-                                                if (int.TryParse(Console.ReadLine(), out casosNovoRec))
-                                                {
-                                                    int casosRecAt = casosNovoRec + CasosReAn;
-                                                    Program.italia[0].casosRecuperados = casosRecAt;
-                                                    nNumCre = true;
-                                                }
-                                                else
-                                                {
-                                                    Console.Write("Invalido, insira outra vez. Qual a quantidade de casos recuperados? ");
-                                                }
-                                            }
-                                        }
-                                        possivel = true;
-                                    }
-                                    else
-                                    {
-                                        Console.Write("Invalido, insira outra vez. Quantas casos há? ");
-                                    }
-
-                                }
-                            }
-                            else
-                            {
-                                Console.Write("Houve recuperados, no dia anterior? s/n ");
-                                char respostRec = char.Parse(Console.ReadLine());
-
-                                if (respostRec == 's')
-                                {
-                                    var CasosReAn = Program.italia[0].casosRecuperados;
-                                    Console.Write("Qual a quantidade de casos recuperados? ");
-                                    bool nNumCre = false;
-                                    int casosNovoRec;
-                                    while (!nNumCre)
-                                    {
-                                        if (int.TryParse(Console.ReadLine(), out casosNovoRec))
-                                        {
-                                            int casosRecAt = casosNovoRec + CasosReAn;
-                                            Program.italia[0].casosRecuperados = casosRecAt;
-                                            nNumCre = true;
-                                        }
-                                        else
-                                        {
-                                            Console.Write("Invalido, insira outra vez. Qual a quantidade de casos recuperados? ");
-                                        }
-                                    }
-                                }
-                                possivel = true;
-                            }
-                        }
-                        else
-                        {
-                            Console.Write("Invalido, insira outra vez. Qual é a idade media dos falecidos? ");
-                            idaNum = int.Parse(Console.ReadLine());
-                        }
-                    }
-                    naoENum = true;
-                }
-                else
-                {
-                    Console.Write("Invalido não premiu um numero!\nQual é a idade media dos falecidos?");
-                }
+            var valorCasosRec = Program.italiaValores[0].Item3;
+            if (valorCasosRec != 0)
+            {
+                Program.italia[0].casosRecuperados = valorCasosRec;
             }
 
             Console.Write("Dados atualmente: ");
@@ -420,7 +450,6 @@ namespace ProjVirus
             {
                 Console.WriteLine(Program.italia[i]);
             }
-
             //Teclado
             InputSimulator sim = new InputSimulator();
             sim.Keyboard.KeyPress(VirtualKeyCode.RETURN);
@@ -433,113 +462,22 @@ namespace ProjVirus
             {
                 Console.WriteLine(Program.EUA[i]);
             }
-            bool possivel = false;
 
-            Console.Write("Qual a idade media dos falecidos? ");
-            int idaNum;
-            bool naoENum = false;
-            while (!naoENum)
+            escolherPais("Eua idadeMedia", "Eua Falecidos", "Eua casosRecuperados", "Eua", 0);
+
+            var valorIdadeAtual = Program.euaValores[0].Item1;
+            Program.EUA[0].idadeMedia = valorIdadeAtual;
+
+            var valorMortalidade = Program.euaValores[0].Item2;
+            if (valorMortalidade != 0)
             {
-                if (int.TryParse(Console.ReadLine(), out idaNum))
-                {
-                    while (!possivel)
-                    {
-                        if (idaNum > 0 && idaNum < 120)
-                        {
+                Program.EUA[0].mortalidade = valorMortalidade;
+            }
 
-                            var NumerAntes = Program.EUA[0].idadeMedia;
-                            int idadNumeroAt = (NumerAntes + idaNum) / 2;
-                            Program.EUA[0].idadeMedia = idadNumeroAt;
-
-                            Console.Write("Houve mais falecimentos devido ao pandemia? s/n ");
-                            char resposta = char.Parse(Console.ReadLine());
-                            if (resposta == 's')
-                            {
-                                var CasosAntesMo = Program.EUA[0].mortalidade;
-                                Console.Write("Quantas casos há? ");
-                                int mortNum;
-
-                                bool naoNuMor = false;
-                                while (!naoNuMor)
-                                {
-                                    if (int.TryParse(Console.ReadLine(), out mortNum))
-                                    {
-                                        int CasosMorAct = CasosAntesMo + mortNum;
-                                        Program.EUA[0].mortalidade = CasosMorAct;
-                                        naoNuMor = true;
-
-                                        Console.Write("Houve recuperados, no dia anterior? s/n ");
-                                        char respostRec = char.Parse(Console.ReadLine());
-
-                                        if (respostRec == 's')
-                                        {
-                                            var CasosReAn = Program.EUA[0].casosRecuperados;
-                                            Console.Write("Qual a quantidade de casos recuperados? ");
-                                            bool nNumCre = false;
-                                            int casosNovoRec;
-                                            while (!nNumCre)
-                                            {
-                                                if (int.TryParse(Console.ReadLine(), out casosNovoRec))
-                                                {
-                                                    int casosRecAt = casosNovoRec + CasosReAn;
-                                                    Program.EUA[0].casosRecuperados = casosRecAt;
-                                                    nNumCre = true;
-                                                }
-                                                else
-                                                {
-                                                    Console.Write("Invalido, insira outra vez. Qual a quantidade de casos recuperados? ");
-                                                }
-                                            }
-                                        }
-                                        possivel = true;
-                                    }
-                                    else
-                                    {
-                                        Console.Write("Invalido, insira outra vez. Quantas casos há? ");
-                                    }
-
-                                }
-                            }
-                            else
-                            {
-                                Console.Write("Houve recuperados, no dia anterior? s/n ");
-                                char respostRec = char.Parse(Console.ReadLine());
-
-                                if (respostRec == 's')
-                                {
-                                    var CasosReAn = Program.EUA[0].casosRecuperados;
-                                    Console.Write("Qual a quantidade de casos recuperados? ");
-                                    bool nNumCre = false;
-                                    int casosNovoRec;
-                                    while (!nNumCre)
-                                    {
-                                        if (int.TryParse(Console.ReadLine(), out casosNovoRec))
-                                        {
-                                            int casosRecAt = casosNovoRec + CasosReAn;
-                                            Program.EUA[0].casosRecuperados = casosRecAt;
-                                            nNumCre = true;
-                                        }
-                                        else
-                                        {
-                                            Console.Write("Invalido, insira outra vez. Qual a quantidade de casos recuperados? ");
-                                        }
-                                    }
-                                }
-                                possivel = true;
-                            }
-                        }
-                        else
-                        {
-                            Console.Write("Invalido, insira outra vez. Qual é a idade media dos falecidos? ");
-                            idaNum = int.Parse(Console.ReadLine());
-                        }
-                    }
-                    naoENum = true;
-                }
-                else
-                {
-                    Console.Write("Invalido não premiu um numero!\nQual é a idade media dos falecidos?");
-                }
+            var valorCasosRec = Program.euaValores[0].Item3;
+            if (valorCasosRec != 0)
+            {
+                Program.EUA[0].casosRecuperados = valorCasosRec;
             }
 
             Console.Write("Dados atualmente: ");
@@ -547,7 +485,6 @@ namespace ProjVirus
             {
                 Console.WriteLine(Program.EUA[i]);
             }
-
             //Teclado
             InputSimulator sim = new InputSimulator();
             sim.Keyboard.KeyPress(VirtualKeyCode.RETURN);
@@ -560,113 +497,22 @@ namespace ProjVirus
             {
                 Console.WriteLine(Program.china[i]);
             }
-            bool possivel = false;
 
-            Console.Write("Qual a idade media dos falecidos? ");
-            int idaNum;
-            bool naoENum = false;
-            while (!naoENum)
+            escolherPais("China idadeMedia", "China Falecidos", "China casosRecuperados", "China", 0);
+
+            var valorIdadeAtual = Program.chinaValores[0].Item1;
+            Program.china[0].idadeMedia = valorIdadeAtual;
+
+            var valorMortalidade = Program.chinaValores[0].Item2;
+            if (valorMortalidade != 0)
             {
-                if (int.TryParse(Console.ReadLine(), out idaNum))
-                {
-                    while (!possivel)
-                    {
-                        if (idaNum > 0 && idaNum < 120)
-                        {
+                Program.china[0].mortalidade = valorMortalidade;
+            }
 
-                            var NumerAntes = Program.china[0].idadeMedia;
-                            int idadNumeroAt = (NumerAntes + idaNum) / 2;
-                            Program.china[0].idadeMedia = idadNumeroAt;
-
-                            Console.Write("Houve mais falecimentos devido ao pandemia? s/n ");
-                            char resposta = char.Parse(Console.ReadLine());
-                            if (resposta == 's')
-                            {
-                                var CasosAntesMo = Program.china[0].mortalidade;
-                                Console.Write("Quantas casos há? ");
-                                int mortNum;
-
-                                bool naoNuMor = false;
-                                while (!naoNuMor)
-                                {
-                                    if (int.TryParse(Console.ReadLine(), out mortNum))
-                                    {
-                                        int CasosMorAct = CasosAntesMo + mortNum;
-                                        Program.china[0].mortalidade = CasosMorAct;
-                                        naoNuMor = true;
-
-                                        Console.Write("Houve recuperados, no dia anterior? s/n ");
-                                        char respostRec = char.Parse(Console.ReadLine());
-
-                                        if (respostRec == 's')
-                                        {
-                                            var CasosReAn = Program.china[0].casosRecuperados;
-                                            Console.Write("Qual a quantidade de casos recuperados? ");
-                                            bool nNumCre = false;
-                                            int casosNovoRec;
-                                            while (!nNumCre)
-                                            {
-                                                if (int.TryParse(Console.ReadLine(), out casosNovoRec))
-                                                {
-                                                    int casosRecAt = casosNovoRec + CasosReAn;
-                                                    Program.china[0].casosRecuperados = casosRecAt;
-                                                    nNumCre = true;
-                                                }
-                                                else
-                                                {
-                                                    Console.Write("Invalido, insira outra vez. Qual a quantidade de casos recuperados? ");
-                                                }
-                                            }
-                                        }
-                                        possivel = true;
-                                    }
-                                    else
-                                    {
-                                        Console.Write("Invalido, insira outra vez. Quantas casos há? ");
-                                    }
-
-                                }
-                            }
-                            else
-                            {
-                                Console.Write("Houve recuperados, no dia anterior? s/n ");
-                                char respostRec = char.Parse(Console.ReadLine());
-
-                                if (respostRec == 's')
-                                {
-                                    var CasosReAn = Program.china[0].casosRecuperados;
-                                    Console.Write("Qual a quantidade de casos recuperados? ");
-                                    bool nNumCre = false;
-                                    int casosNovoRec;
-                                    while (!nNumCre)
-                                    {
-                                        if (int.TryParse(Console.ReadLine(), out casosNovoRec))
-                                        {
-                                            int casosRecAt = casosNovoRec + CasosReAn;
-                                            Program.china[0].casosRecuperados = casosRecAt;
-                                            nNumCre = true;
-                                        }
-                                        else
-                                        {
-                                            Console.Write("Invalido, insira outra vez. Qual a quantidade de casos recuperados? ");
-                                        }
-                                    }
-                                }
-                                possivel = true;
-                            }
-                        }
-                        else
-                        {
-                            Console.Write("Invalido, insira outra vez. Qual é a idade media dos falecidos? ");
-                            idaNum = int.Parse(Console.ReadLine());
-                        }
-                    }
-                    naoENum = true;
-                }
-                else
-                {
-                    Console.Write("Invalido não premiu um numero!\nQual é a idade media dos falecidos?");
-                }
+            var valorCasosRec = Program.chinaValores[0].Item3;
+            if (valorCasosRec != 0)
+            {
+                Program.china[0].casosRecuperados = valorCasosRec;
             }
 
             Console.Write("Dados atualmente: ");
@@ -674,7 +520,6 @@ namespace ProjVirus
             {
                 Console.WriteLine(Program.china[i]);
             }
-
             //Teclado
             InputSimulator sim = new InputSimulator();
             sim.Keyboard.KeyPress(VirtualKeyCode.RETURN);
@@ -687,113 +532,22 @@ namespace ProjVirus
             {
                 Console.WriteLine(Program.espanha[i]);
             }
-            bool possivel = false;
 
-            Console.Write("Qual a idade media dos falecidos? ");
-            int idaNum;
-            bool naoENum = false;
-            while (!naoENum)
+            escolherPais("Espanha idadeMedia", "Espanha Falecidos", "Espanha casosRecuperados", "Espanha", 0);
+
+            var valorIdadeAtual = Program.espanhaValores[0].Item1;
+            Program.espanha[0].idadeMedia = valorIdadeAtual;
+
+            var valorMortalidade = Program.espanhaValores[0].Item2;
+            if (valorMortalidade != 0)
             {
-                if (int.TryParse(Console.ReadLine(), out idaNum))
-                {
-                    while (!possivel)
-                    {
-                        if (idaNum > 0 && idaNum < 120)
-                        {
+                Program.espanha[0].mortalidade = valorMortalidade;
+            }
 
-                            var NumerAntes = Program.espanha[0].idadeMedia;
-                            int idadNumeroAt = (NumerAntes + idaNum) / 2;
-                            Program.espanha[0].idadeMedia = idadNumeroAt;
-
-                            Console.Write("Houve mais falecimentos devido ao pandemia? s/n ");
-                            char resposta = char.Parse(Console.ReadLine());
-                            if (resposta == 's')
-                            {
-                                var CasosAntesMo = Program.espanha[0].mortalidade;
-                                Console.Write("Quantas casos há? ");
-                                int mortNum;
-
-                                bool naoNuMor = false;
-                                while (!naoNuMor)
-                                {
-                                    if (int.TryParse(Console.ReadLine(), out mortNum))
-                                    {
-                                        int CasosMorAct = CasosAntesMo + mortNum;
-                                        Program.espanha[0].mortalidade = CasosMorAct;
-                                        naoNuMor = true;
-
-                                        Console.Write("Houve recuperados, no dia anterior? s/n ");
-                                        char respostRec = char.Parse(Console.ReadLine());
-
-                                        if (respostRec == 's')
-                                        {
-                                            var CasosReAn = Program.espanha[0].casosRecuperados;
-                                            Console.Write("Qual a quantidade de casos recuperados? ");
-                                            bool nNumCre = false;
-                                            int casosNovoRec;
-                                            while (!nNumCre)
-                                            {
-                                                if (int.TryParse(Console.ReadLine(), out casosNovoRec))
-                                                {
-                                                    int casosRecAt = casosNovoRec + CasosReAn;
-                                                    Program.espanha[0].casosRecuperados = casosRecAt;
-                                                    nNumCre = true;
-                                                }
-                                                else
-                                                {
-                                                    Console.Write("Invalido, insira outra vez. Qual a quantidade de casos recuperados? ");
-                                                }
-                                            }
-                                        }
-                                        possivel = true;
-                                    }
-                                    else
-                                    {
-                                        Console.Write("Invalido, insira outra vez. Quantas casos há? ");
-                                    }
-
-                                }
-                            }
-                            else
-                            {
-                                Console.Write("Houve recuperados, no dia anterior? s/n ");
-                                char respostRec = char.Parse(Console.ReadLine());
-
-                                if (respostRec == 's')
-                                {
-                                    var CasosReAn = Program.espanha[0].casosRecuperados;
-                                    Console.Write("Qual a quantidade de casos recuperados? ");
-                                    bool nNumCre = false;
-                                    int casosNovoRec;
-                                    while (!nNumCre)
-                                    {
-                                        if (int.TryParse(Console.ReadLine(), out casosNovoRec))
-                                        {
-                                            int casosRecAt = casosNovoRec + CasosReAn;
-                                            Program.espanha[0].casosRecuperados = casosRecAt;
-                                            nNumCre = true;
-                                        }
-                                        else
-                                        {
-                                            Console.Write("Invalido, insira outra vez. Qual a quantidade de casos recuperados? ");
-                                        }
-                                    }
-                                }
-                                possivel = true;
-                            }
-                        }
-                        else
-                        {
-                            Console.Write("Invalido, insira outra vez. Qual é a idade media dos falecidos? ");
-                            idaNum = int.Parse(Console.ReadLine());
-                        }
-                    }
-                    naoENum = true;
-                }
-                else
-                {
-                    Console.Write("Invalido não premiu um numero!\nQual é a idade media dos falecidos?");
-                }
+            var valorCasosRec = Program.espanhaValores[0].Item3;
+            if (valorCasosRec != 0)
+            {
+                Program.espanha[0].casosRecuperados = valorCasosRec;
             }
 
             Console.Write("Dados atualmente: ");
@@ -801,7 +555,6 @@ namespace ProjVirus
             {
                 Console.WriteLine(Program.espanha[i]);
             }
-
             //Teclado
             InputSimulator sim = new InputSimulator();
             sim.Keyboard.KeyPress(VirtualKeyCode.RETURN);
