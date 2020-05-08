@@ -266,7 +266,6 @@ namespace ProjVirus
                             var NumerAntes = PaisEscolhidoIdadeMedia(PaisEscolhidoIdade, escolherPosicaodaLista);
                             idadNumeroAt = (NumerAntes + idaNum) / 2;
                             var NumeroAgora = PaisEscolhidoIdadeMedia(PaisEscolhidoIdade, escolherPosicaodaLista);
-                            NumeroAgora = idadNumeroAt;
 
                             Console.Write("Houve mais falecimentos devido ao pandemia? s/n ");
                             char resposta = char.Parse(Console.ReadLine());
@@ -283,7 +282,6 @@ namespace ProjVirus
                                     {
                                         CasosMorAct = CasosAntesMo + mortNum;
                                         var CasosMorAtualmente = PaisEscolhidoMortalidade(PaisEscolhidoMort, escolherPosicaodaLista);
-                                        CasosMorAtualmente = CasosMorAct;
 
                                         naoNuMor = true;
 
@@ -302,7 +300,6 @@ namespace ProjVirus
                                                 {
                                                     casosRecAt = casosNovoRec + CasosRecAntes;
                                                     var casosRecuperadosAgora = PaisEscolhidoCasosRecuperados(PaisEscolhidoCasosRec, escolherPosicaodaLista);
-                                                    casosRecuperadosAgora = casosRecAt;
                                                     nNumCre = true;
                                                 }
                                                 else
@@ -337,7 +334,6 @@ namespace ProjVirus
                                             casosRecAt = casosNovoRec + CasosReAn;
 
                                             var CasosRecuperadosAgora = PaisEscolhidoCasosRecuperados(PaisEscolhidoCasosRec, escolherPosicaodaLista);
-                                            CasosRecuperadosAgora = casosRecAt;
                                             nNumCre = true;
                                         }
                                         else
@@ -345,10 +341,8 @@ namespace ProjVirus
                                             Console.Write("Invalido, insira outra vez. Qual a quantidade de casos recuperados? ");
                                         }
                                     }
-
                                 }
                                 possivel = true;
-
                             }
                         }
                         else

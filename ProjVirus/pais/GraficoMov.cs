@@ -36,50 +36,6 @@ namespace ProjVirus.pais
             alt.colocarIndicador(rem, gDestino);
         }
 
-        public void melhoriaVirus(char numeroColuna, int numeroLinha)
-        {
-            PosicaoIndGraf orig = new PosicaoIndGraf(numeroColuna, numeroLinha);
-            Grafico gOrig = orig.toGrafico();
-            PosicaoIndGraf dest = new PosicaoIndGraf(numeroColuna, numeroLinha + 1);
-            Grafico gDestino = dest.toGrafico();
-
-            porSimboloOuTirar(gOrig, gDestino);
-            Console.ReadLine();
-        }
-
-        public void piorVirus(char numeroColuna, int numeroLinha)
-        {
-            PosicaoIndGraf orig = new PosicaoIndGraf(numeroColuna, numeroLinha);
-            Grafico gOrig = orig.toGrafico();
-            PosicaoIndGraf dest = new PosicaoIndGraf(numeroColuna, numeroLinha - 1);
-            Grafico gDestino = dest.toGrafico();
-
-            porSimboloOuTirar(gOrig, gDestino);
-            Console.ReadLine();
-        }
-
-        public void melhoriaVirusDadosGerais()
-        {
-            PosicaoIndGraf orig = new PosicaoIndGraf('1', 2);
-            Grafico gOrig = orig.toGrafico();
-            PosicaoIndGraf dest = new PosicaoIndGraf('1', 3);
-            Grafico gDestino = dest.toGrafico();
-
-            porSimboloOuTirar(gOrig, gDestino);
-            Console.ReadLine();
-        }
-
-        public void piorVirusDadosGerais()
-        {
-            PosicaoIndGraf orig = new PosicaoIndGraf('1', 2);
-            Grafico gOrig = orig.toGrafico();
-            PosicaoIndGraf dest = new PosicaoIndGraf('1', 1);
-            Grafico gDestino = dest.toGrafico();
-
-            porSimboloOuTirar(gOrig, gDestino);
-            Console.ReadLine();
-        }
-
         public static int CasosRecuperados(string pais)
         {
             int totalCasosRecuperadosPt = Program.portugal.Where(item => item.casosRecuperados > 0).Sum(item => item.casosRecuperados);
@@ -187,6 +143,5 @@ namespace ProjVirus.pais
             colocarNovoInd('5', 2, new EUAInd(alt, Cor.Azul));
             colocarNovoInd('6', 2, new EspanhaInd(alt, Cor.Amarelo));
         }
-
     }
 }
