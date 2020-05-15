@@ -24,7 +24,6 @@ namespace ProjVirus
         public static List<Tuple<int, int, int>> chinaValores = new List<Tuple<int, int, int>>();
         public static List<Tuple<int, int, int>> euaValores = new List<Tuple<int, int, int>>();
 
-
         static void Main(string[] args)
         {
             int opcao = 0;
@@ -48,7 +47,6 @@ namespace ProjVirus
             int todasMortesPaises = somArrayMortes + dadosMortalidadePortugal;
 
             paisesDados.Add(new PaisesDadosGer(todasMortesPaises));
-
             try
             {
                 GraficoMov grafico = new GraficoMov();

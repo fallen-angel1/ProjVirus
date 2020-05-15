@@ -11,7 +11,6 @@ namespace grafico
         public Grafico grafico { get; set; }
         public Cor cor { get; protected set; }
         public Alteracoes alt { get; protected set; }
-        public int qtMovimentos { get; protected set; }
        
 
         public Pais(Alteracoes alt, Cor cor)

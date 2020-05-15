@@ -171,7 +171,6 @@ namespace ProjVirus
                 Console.WriteLine("Fim do Programa!");
             }
         }
-
         public static int PaisEscolhidoCasosRecuperados(string PaisEscolhidoCasosRec, int escolherPosicaoAlterar)
         {
             int paisAlterarPortugal = Program.portugal[escolherPosicaoAlterar].casosRecuperados;
@@ -352,7 +351,6 @@ namespace ProjVirus
                         }
                     }
                     naoENum = true;
-
                     switch (paisValoresLista)
                     {
                         case "Portugal":

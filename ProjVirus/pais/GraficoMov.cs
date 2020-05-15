@@ -95,7 +95,7 @@ namespace ProjVirus.pais
             switch (paisEscolhido)
             {
                 case "Todos":
-                   return '1';
+                    return '1';
                 case "Portugal":
                     return '2';
                 case "Italia":
@@ -136,12 +136,12 @@ namespace ProjVirus.pais
 
         public void colocarIndicadores()
         {
-            colocarNovoInd('1', 2, new PaisesDadosGerInd(alt, Cor.Branco));
-            colocarNovoInd('2', 2, new PortugalInd(alt, Cor.Vermelho));
-            colocarNovoInd('3', 2, new ItaliaInd(alt, Cor.Verde));
-            colocarNovoInd('4', 2, new ChinaInd(alt, Cor.Laranja));
-            colocarNovoInd('5', 2, new EUAInd(alt, Cor.Azul));
-            colocarNovoInd('6', 2, new EspanhaInd(alt, Cor.Amarelo));
+            colocarNovoInd('1', 2, new PaisesMoverIndicador(alt, Cor.Branco));
+            colocarNovoInd('2', 2, new PaisesMoverIndicador("Portugal", alt, Cor.Vermelho));
+            colocarNovoInd('3', 2, new PaisesMoverIndicador("Italia", alt, Cor.Verde));
+            colocarNovoInd('4', 2, new PaisesMoverIndicador("China", alt, Cor.Laranja));
+            colocarNovoInd('5', 2, new PaisesMoverIndicador("EUA", alt, Cor.Azul));
+            colocarNovoInd('6', 2, new PaisesMoverIndicador("Espanha", alt, Cor.Amarelo));
         }
     }
 }
