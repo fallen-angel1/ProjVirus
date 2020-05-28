@@ -136,12 +136,23 @@ namespace ProjVirus.pais
 
         public void colocarIndicadores()
         {
+            var builderPortugal = new PaisEscolhido();
+            var builderItalia = new PaisEscolhido();
+            var builderChina = new PaisEscolhido();
+            var builderEua = new PaisEscolhido();
+            var builderEspanha = new PaisEscolhido();
+
             colocarNovoInd('1', 2, new PaisesMoverIndicador(alt, Cor.Branco));
-            colocarNovoInd('2', 2, new PaisesMoverIndicador("Portugal", alt, Cor.Vermelho));
-            colocarNovoInd('3', 2, new PaisesMoverIndicador("Italia", alt, Cor.Verde));
-            colocarNovoInd('4', 2, new PaisesMoverIndicador("China", alt, Cor.Laranja));
-            colocarNovoInd('5', 2, new PaisesMoverIndicador("EUA", alt, Cor.Azul));
-            colocarNovoInd('6', 2, new PaisesMoverIndicador("Espanha", alt, Cor.Amarelo));
+            builderPortugal.SetPortugal();
+            colocarNovoInd('2', 2, new PaisesMoverIndicador(builderPortugal.GetPaisSeleccionado().ListPaisSel(), alt, Cor.Vermelho));
+            builderItalia.setItalia();
+            colocarNovoInd('3', 2, new PaisesMoverIndicador(builderItalia.GetPaisSeleccionado().ListPaisSel(), alt, Cor.Verde));
+            builderChina.SetChina();
+            colocarNovoInd('4', 2, new PaisesMoverIndicador(builderChina.GetPaisSeleccionado().ListPaisSel(), alt, Cor.Laranja));
+            builderEua.SetEua();
+            colocarNovoInd('5', 2, new PaisesMoverIndicador(builderEua.GetPaisSeleccionado().ListPaisSel(), alt, Cor.Azul));
+            builderEspanha.SetEspanha();
+            colocarNovoInd('6', 2, new PaisesMoverIndicador(builderEspanha.GetPaisSeleccionado().ListPaisSel(), alt, Cor.Amarelo));
         }
     }
 }

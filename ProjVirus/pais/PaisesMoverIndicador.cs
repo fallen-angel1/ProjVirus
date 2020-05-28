@@ -1,4 +1,5 @@
 ﻿using grafico;
+using ProjVirus.grafico;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,39 +12,19 @@ namespace ProjVirus.pais
 
         public PaisesMoverIndicador(string pais, Alteracoes alt, Cor cor) : base(alt, cor)
         {
-
             this.pais = pais;
         }
 
         public PaisesMoverIndicador(Alteracoes alt, Cor cor) : base(alt, cor)
         {
-      
-            this.pais = "Todos";
-        }
-
-        public static string escolherPais(string Pais)
-        {
-            switch (Pais)
-            {
-                case "Portugal":
-                    return "P ";
-                case "Italia":
-                    return "I ";
-                case "China":
-                    return "C ";
-                case "EUA":
-                    return "A ";
-                case "Espanha":
-                    return "E ";
-                case "Todos":
-                    return "DG";
-            }
-            return Pais;
+            var builder = new PaisEscolhido();
+            builder.setTodos();
+            this.pais = builder.GetPaisSeleccionado().ListPaisSel();
         }
 
         public override string ToString()
         {
-            return escolherPais(pais);
+            return pais;
         }
     }
 }
